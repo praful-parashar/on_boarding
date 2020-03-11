@@ -56,4 +56,23 @@ payload - {
 	"merchant": 5
 }
 
+### For Deleting
+- /plan/merchants/pk/
+- - Method type: DELETE
+
+- /plan/stores/pk/
+- - Method type: DELETE
+
+- /plan/items/pk/
+- - Method type: DELETE
+
+## For Retrieving
+- /plan/merchants/
+- - Method type: GET
+
+- /plan/stores/
+- - Method type: GET
+
+-/plan/items/
+- - Method type: GET
 
