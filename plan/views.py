@@ -20,12 +20,14 @@ class MerchantViewSet(viewsets.ModelViewSet,
 
 
 class StoreViewSet(viewsets.ModelViewSet,
-                UpdateModelMixin):                   
+                UpdateModelMixin): 
+    permission_classes = (IsAuthenticated, )                   
     queryset = Store.objects.all()
     serializer_class = StoreSerializer
 
 
 class ItemViewSet(viewsets.ModelViewSet,
                 UpdateModelMixin):
+    permission_classes = (IsAuthenticated, ) 
     queryset = Item.objects.all()
     serializer_class = ItemSerializer    
