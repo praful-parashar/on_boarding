@@ -16,10 +16,7 @@ class StoreSerializer(serializers.ModelSerializer):
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ['item_name',
-                'item_price',
-                'item_description',
-                ]
+        fields = '__all__'
 
 
 class TransactionSerializer(serializers.ModelSerializer):
