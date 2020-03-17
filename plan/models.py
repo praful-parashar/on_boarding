@@ -25,12 +25,20 @@ class Store(models.Model):
         super(Store, self).save(*args, **kwargs)     
 
 
-
 class Item(models.Model):
-    item_name = models.CharField("Item Name", max_length=30)
+    item_name = models.CharField("Item Name", max_length=300)
     item_price = models.FloatField("Item Price", default=0)
     item_description = models.TextField("Item Description", blank=True)
     merchant = models.ForeignKey(Merchant, related_name="merchant_items", on_delete=models.CASCADE)
 
     def __str__(self):
-        return "{}-{}".format(self.name, self.price)    
+        return "{}-{}".format(self.item_name, self.item_price)   
+
+
+class Transaction(models.Model):
+    store = models.ForeignKey(Store, related_name="store_transactions", on_delete=models.CASCADE)
+    merchant = models.ForeignKey(Merchant, related_name="merchant_transactions", on_delete=models.CASCADE)
+    items = models.ManyToManyField(Item, related_name="tx_items")
+
+    def __str__(self):
+        return "{}-{}".format(self.pk, self.store, self.merchant)

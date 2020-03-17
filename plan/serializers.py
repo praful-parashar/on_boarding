@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Merchant, Store, Item
+from .models import Merchant, Store, Item, Transaction
 
 class MerchantSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,4 +16,13 @@ class StoreSerializer(serializers.ModelSerializer):
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
+        fields = ['item_name',
+                'item_price',
+                'item_description',
+                ]
+
+
+class TransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Transaction
         fields = '__all__'
