@@ -1,4 +1,5 @@
 import json
+import structlog
 from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework import viewsets, serializers
@@ -8,7 +9,8 @@ from rest_framework.mixins import (ListModelMixin,
                                 UpdateModelMixin)
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated                                
+from rest_framework.permissions import IsAuthenticated   
+from celery.task import task                             
 from plan.models import *
 from plan.serializers import (MerchantSerializer,
                             StoreSerializer,
@@ -16,10 +18,10 @@ from plan.serializers import (MerchantSerializer,
                             TransactionSerializer)
 
 # Create your views here.
-
+logger = structlog.getLogger(__name__)
 class MerchantViewSet(viewsets.ModelViewSet,
                     UpdateModelMixin):
-    # permission_classes = (IsAuthenticated, )                
+    permission_classes = (IsAuthenticated, )                
     queryset = Merchant.objects.all()
     serializer_class = MerchantSerializer
 
@@ -63,7 +65,7 @@ class MerchantViewSet(viewsets.ModelViewSet,
 
 class StoreViewSet(viewsets.ModelViewSet,
                 UpdateModelMixin): 
-    # permission_classes = (IsAuthenticated, )                   
+    permission_classes = (IsAuthenticated, )                   
     queryset = Store.objects.all()
     serializer_class = StoreSerializer
 
@@ -81,7 +83,7 @@ class StoreViewSet(viewsets.ModelViewSet,
 
 class ItemViewSet(viewsets.ModelViewSet,
                 UpdateModelMixin):
-    # permission_classes = (IsAuthenticated, ) 
+    permission_classes = (IsAuthenticated, ) 
     queryset = Item.objects.all()
     serializer_class = ItemSerializer 
 
@@ -95,6 +97,13 @@ class ItemViewSet(viewsets.ModelViewSet,
             return str(e)   
 
 class TransactionViewSet(viewsets.ModelViewSet,
-                            UpdateModelMixin):
+                            UpdateModelMixin):                        
     queryset = Transaction.objects.all()
-    serializer_class = TransactionSerializer                            
+    serializer_class = TransactionSerializer 
+
+    def create(self, request):
+        resp = super(TransactionViewSet, self).create(request)
+        logger.info("transaction_created", response=resp)
+        return resp
+
+                               
