@@ -26,7 +26,8 @@ SECRET_KEY = 'vv#cb+k(cbw&4nzxa&n@d#+!yqmb)s=^%06le_072v$%n%lc#q'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+CELERY_IMPORTS = ('plan.tasks')
+CELERY_ALWAYS_EAGER = True
 
 # Application definition
 

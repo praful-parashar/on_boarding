@@ -1,5 +1,61 @@
 # On Boarding Project
 
+## Introduction
+
+This project covers basic flow of a transactional system. 
+
+### For setting up the project
+
+- Prerequisites:
+  - python 3.x
+  - virtualenv
+
+- clone the repository
+
+- Set up virtualenv
+
+	- ```$ python -m venv venv```
+	- ```$ source venv/bin/activate```
+
+- cd into project directory
+
+	- ``` $ pip install -r requirements.txt```
+
+> You might face issues while setting it up, I have addressed the ones I think you will at the end of this README. Go and have a look.
+
+So after successfully setting up the project. It's time for the django drill
+```
+
+$ python manage.py makemigrations
+$ python manage.py migrate
+$ python manage.py createsuperuser
+$ python manage.py runserver
+
+```
+
+Your application is now running at:
+http://127.0.0.1:800/plan/
+
+Now for the API endpoints to work 
+you need to authorize your user.
+
+Token Endpoint
+> http://127.0.0.1:8000/plan/api/token/
+
+payload = 
+{
+	"username": "<your_username>",
+	"password": "<your_password>"
+}
+
+- method type: POST
+
+You will obtain 2 tokens:
+- access
+- refresh
+
+> Use the access token
+
 ## API Endpoints
 
 ### For Creation

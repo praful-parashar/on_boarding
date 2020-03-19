@@ -10,7 +10,8 @@ from rest_framework.mixins import (ListModelMixin,
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated   
-from celery.task import task                             
+from celery.task import task 
+from plan.tasks import *                            
 from plan.models import *
 from plan.serializers import (MerchantSerializer,
                             StoreSerializer,
@@ -102,8 +103,10 @@ class TransactionViewSet(viewsets.ModelViewSet,
     serializer_class = TransactionSerializer 
 
     def create(self, request):
-        resp = super(TransactionViewSet, self).create(request)
-        logger.info("transaction_created", response=resp)
-        return resp
+        serializer = TransactionSerializer(data=request.data)
+        if serializer.is_valid():
+            foo = create_txs.delay(serializer.data)
+        
+        return Response("Transaction is queued, refresh and verify")
 
                                
