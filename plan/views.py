@@ -22,12 +22,17 @@ from plan.serializers import (MerchantSerializer,
 logger = structlog.getLogger(__name__)
 class MerchantViewSet(viewsets.ModelViewSet,
                     UpdateModelMixin):
-    permission_classes = (IsAuthenticated, )                
+    # permission_classes = (IsAuthenticated, )                
     queryset = Merchant.objects.all()
     serializer_class = MerchantSerializer
 
     def get_serializer_class(self, *args, **kwargs):
         return self.serializer_class
+
+    def create(self, request):
+        resp = super(MerchantViewSet, self).create(request)
+        logger.info("merchant_creation", item_id=resp.data['id'], user=request.user, path=request.path)
+        return resp
 
     @action(detail=True, methods=['get'])
     def stores(self, request, pk=None):
@@ -59,6 +64,7 @@ class MerchantViewSet(viewsets.ModelViewSet,
             merchant = Merchant.objects.get(pk=pk)
             txs_queryset = merchant.merchant_transactions.all()
             serializer = TransactionSerializer(txs_queryset, many=True)
+            logger.info("merchant_txs", merchant_id=pk, no_of_txs=txs_queryset.count())
             return Response(serializer.data)
         except Exception as e:
             return str(e)        
@@ -66,9 +72,14 @@ class MerchantViewSet(viewsets.ModelViewSet,
 
 class StoreViewSet(viewsets.ModelViewSet,
                 UpdateModelMixin): 
-    permission_classes = (IsAuthenticated, )                   
+    # permission_classes = (IsAuthenticated, )                   
     queryset = Store.objects.all()
     serializer_class = StoreSerializer
+
+    def create(self, request):
+        resp = super(StoreViewSet, self).create(request)
+        logger.info("store_creation", item_id=resp.data['id'], user=request.user, path=request.path)
+        return resp
 
     @action(detail=True, methods=['get'])
     def transactions(self, request, pk=None):
@@ -87,6 +98,11 @@ class ItemViewSet(viewsets.ModelViewSet,
     queryset = Item.objects.all()
     serializer_class = ItemSerializer 
 
+    def create(self, request):
+        resp = super(ItemViewSet, self).create(request)
+        logger.info("item_creation", item_id=resp.data['id'], user=request.user, path=request.path)
+        return resp
+
     @action(detail=True, methods=['get'])
     def merchant(self, request, pk=None):
         try:
@@ -98,14 +114,19 @@ class ItemViewSet(viewsets.ModelViewSet,
 
 
 class TransactionViewSet(viewsets.ModelViewSet,
-                        UpdateModelMixin):                        
+                        UpdateModelMixin): 
+    
+    permission_classes = (IsAuthenticated, )                        
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer 
 
     def create(self, request):
+        log = logger.bind(user=request.user, path=request.path)
         serializer = TransactionSerializer(data=request.data)
         if serializer.is_valid():
-            foo = create_txs.delay(serializer.data)
+            foo = create_txs.delay(serializer.data, log)
+        else:
+            return Response('Payload is incorrect, please verify')    
         
         return Response("Transaction is queued, refresh and verify")
 

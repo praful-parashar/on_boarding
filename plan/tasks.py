@@ -15,7 +15,7 @@ def once_more():
     return 'Once More'
 
 @app.task
-def create_txs(tx_data):
+def create_txs(tx_data, log):
     tx_model = apps.get_model(app_label='plan', model_name='Transaction')
     merc_model = apps.get_model(app_label='plan', model_name='Merchant')
     store_model = apps.get_model(app_label='plan', model_name='Store')
@@ -30,10 +30,10 @@ def create_txs(tx_data):
         for i in range(0, len(items)):
             instance.items.add(items[i])
         instance.save()
-        logger.info("transaction_object", tx=instance.pk)
+        log.info("transaction_object", tx=instance.pk, payload=tx_data)
         return "Done"
     except Exception as e:
-        logger.info("exception_occured_in_tx_creation", exception=str(e))
+        log.info("exception_occured_in_tx_creation", exception=str(e), payload=tx_data)
         return str(e)
     
 
