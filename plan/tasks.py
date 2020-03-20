@@ -1,19 +1,20 @@
 import structlog
 from celery import Celery
-from celery.task import task
+# from celery.task import task
+from onboarding_project.celery import app
 from django.apps import apps
-app = Celery('hello', broker='amqp://localhost')
+# app = Celery('hello', broker='amqp://localhost')
 
 logger = structlog.getLogger(__name__)
 @app.task
 def hello():
     return 'hello world'
 
-@task
+@app.task
 def once_more():
     return 'Once More'
 
-@task
+@app.task
 def create_txs(tx_data):
     tx_model = apps.get_model(app_label='plan', model_name='Transaction')
     merc_model = apps.get_model(app_label='plan', model_name='Merchant')

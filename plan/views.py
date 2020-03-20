@@ -81,7 +81,6 @@ class StoreViewSet(viewsets.ModelViewSet,
             return str(e)
 
 
-
 class ItemViewSet(viewsets.ModelViewSet,
                 UpdateModelMixin):
     permission_classes = (IsAuthenticated, ) 
@@ -97,8 +96,9 @@ class ItemViewSet(viewsets.ModelViewSet,
         except Exception as e:
             return str(e)   
 
+
 class TransactionViewSet(viewsets.ModelViewSet,
-                            UpdateModelMixin):                        
+                        UpdateModelMixin):                        
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer 
 

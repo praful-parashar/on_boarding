@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'plan',
     'rest_framework',
-    'silk'
+    'silk',
 ]
 
 MIDDLEWARE = [
