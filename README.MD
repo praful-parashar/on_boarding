@@ -54,81 +54,85 @@ You will obtain 2 tokens:
 - access
 - refresh
 
-> Use the access token
+> Use the access token with `Bearer` prefix
+for eg.: In request header:
+```
+'Authorization': 'Bearer <JWT_ACCESS_TOKEN>'
+```
 
 ## API Endpoints
 
-### For Creation
-- /plan/merchants/
-- - Method type: POST
+### For Creation - Method Type: POST
 
-Payload - 
-    {
-	"merchant_name": "New merch"
+- /plan/merchants/
+ 
+```
+{	
+ "merchant_name": "New merch"
 }
+```
+
 
 - /plan/stores/
-- - method type: POST
 
-payload - 
-    {
-    "store_name": "New store",
+```
+{
+	"store_name": "New store",
     "store_address": "created by api",
     "s_latitude": null,
     "s_longitude": null,
     "merchant": 5
 }
+```
 
 - /plan/items/
-- - Method type: POST
 
-payload - {
+```
+{
 	"item_name": "new item - 1",
 	"merchant": 6
 }
+```
 
-### For Updation
+### For Updation - Method Type: PUT/PATCH
 - /plan/merchants/
-- - Method type: PUT/PATCH
 
-payload - {
+```
+{
 	"merchant_name": "changed/new"
 }
+```
 
 - /plan/stores/
-- - Method type: PUT/PATCH
 
-payload - {
+```
+{
 	"store_name": "postman-updated-new",
 	"store_address": "postman-add",
 	"merchant": 5 
 }
+```
 
 - /plan/items/
-- - Method type: PUT/PATCH
 
-payload - {
+```
+{
 	"item_name":"updated",
 	"merchant": 5
 }
+```
 
-### For Deleting
+### For Deleting - Method Type: DELETE
 - /plan/merchants/pk/
-- - Method type: DELETE
 
 - /plan/stores/pk/
-- - Method type: DELETE
 
 - /plan/items/pk/
-- - Method type: DELETE
 
-## For Retrieving
+## For Retrieving - Method Type: GET
 - /plan/merchants/
-- - Method type: GET
 
 - /plan/stores/
-- - Method type: GET
 
--/plan/items/
-- - Method type: GET
+- /plan/items/
 
