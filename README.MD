@@ -136,3 +136,26 @@ for eg.: In request header:
 
 - /plan/items/
 
+## Issues You can face while setting up the project
+
+### 1. Error while installing `mysqlclient`
+- It is possible that your python3 version is not compatible with the mysqlclient, probably python3.7.5
+- you will need to install python3.6 which is compatible with mysqlclient.
+- Link for github repo through which multiple verisons of python can exist on your system - https://github.com/pyenv/pyenv
+- The readme of this repo very well explains the installation part of different versions of python.
+- Still I would jot down the steps you'll need 
+	- clone the repo - Pyenv
+	- set env variables in your ~/.bashrc and restart terminal
+	- cd into the project directory - Onboarding_project
+	- Run this command ``` $pyenv local 3.6.5```
+- After these steps a file will be created as .python-version - which specifies the python version in that directory
+- create virtualenv and source into it
+
+### 2. Setting up root user in mysql with all the permissions.
+```
+Access denied to user 'root'@'localhost'
+```
+- If you have an existing user with all the permissions granted. Make the credential changes in the `settings` file against DB configurations.
+- But, If you have installed mysql-server for the first time. Chances are that you have to grant permissions to root user yourself.
+-  There are several links to follow on google, I found this one best: [link](https://stackoverflow.com/questions/41542045/mysql-django-db-utils-operationalerror-1698-access-denied-for-user-root)
+
