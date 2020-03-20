@@ -41,12 +41,12 @@ you need to authorize your user.
 
 Token Endpoint
 > http://127.0.0.1:8000/plan/api/token/
-
-payload = 
+```
 {
 	"username": "<your_username>",
 	"password": "<your_password>"
 }
+```
 
 - method type: POST
 
@@ -95,7 +95,7 @@ for eg.: In request header:
 ```
 
 ### For Updation - Method Type: PUT/PATCH
-- /plan/merchants/
+- /plan/merchants/pk/
 
 ```
 {
@@ -103,7 +103,7 @@ for eg.: In request header:
 }
 ```
 
-- /plan/stores/
+- /plan/stores/pk/
 
 ```
 {
@@ -113,7 +113,7 @@ for eg.: In request header:
 }
 ```
 
-- /plan/items/
+- /plan/items/pk/
 
 ```
 {
@@ -129,7 +129,7 @@ for eg.: In request header:
 
 - /plan/items/pk/
 
-## For Retrieving - Method Type: GET
+### For Retrieving - Method Type: GET
 - /plan/merchants/
 
 - /plan/stores/
