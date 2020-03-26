@@ -22,7 +22,7 @@ from plan.serializers import (MerchantSerializer,
 logger = structlog.getLogger(__name__)
 class MerchantViewSet(viewsets.ModelViewSet,
                     UpdateModelMixin):
-    permission_classes = (IsAuthenticated, )                
+    # permission_classes = (IsAuthenticated, )                
     queryset = Merchant.objects.all()
     serializer_class = MerchantSerializer
 
@@ -72,7 +72,7 @@ class MerchantViewSet(viewsets.ModelViewSet,
 
 class StoreViewSet(viewsets.ModelViewSet,
                 UpdateModelMixin): 
-    permission_classes = (IsAuthenticated, )                   
+    # permission_classes = (IsAuthenticated, )                   
     queryset = Store.objects.all()
     serializer_class = StoreSerializer
 
@@ -94,7 +94,7 @@ class StoreViewSet(viewsets.ModelViewSet,
 
 class ItemViewSet(viewsets.ModelViewSet,
                 UpdateModelMixin):
-    permission_classes = (IsAuthenticated, ) 
+    # permission_classes = (IsAuthenticated, ) 
     queryset = Item.objects.all()
     serializer_class = ItemSerializer 
 
@@ -116,10 +116,10 @@ class ItemViewSet(viewsets.ModelViewSet,
 class TransactionViewSet(viewsets.ModelViewSet,
                         UpdateModelMixin): 
     
-    permission_classes = (IsAuthenticated, )                        
+    # permission_classes = (IsAuthenticated, )                        
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer 
-
+                                                
     def create(self, request):
         log = logger.bind(user=request.user, path=request.path)
         serializer = TransactionSerializer(data=request.data)
