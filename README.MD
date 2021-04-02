@@ -159,3 +159,9 @@ Access denied to user 'root'@'localhost'
 - But, If you have installed mysql-server for the first time. Chances are that you have to grant permissions to root user yourself.
 -  There are several links to follow on google, I found this one best: [link](https://stackoverflow.com/questions/41542045/mysql-django-db-utils-operationalerror-1698-access-denied-for-user-root)
 
+### 3. You might also face maybe this or this type of error.
+```
+Failed building wheel for mysqlclient
+```
+- This link of [digital ocean](https://www.digitalocean.com/community/questions/error-failed-building-wheel-for-mysqlclient-blocker-on-unbuntu-18-04-droplet)
+helped me out specifically this command `sudo apt-get install python3.6-dev`
