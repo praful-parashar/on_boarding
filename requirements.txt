@@ -1,6 +1,6 @@
 amqp==1.4.9
 celery==3.1.26.post2
-Django==2.2.4
+Django==2.2.24
 django-celery==3.3.1
 django-silk==4.0.1
 djangorestframework==3.11.0
